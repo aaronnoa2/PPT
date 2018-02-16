@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ChatService} from "../chat.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {ChatService} from "../chat.service";
   templateUrl: './juego.component.html',
   styleUrls: ['./juego.component.css']
 })
-export class JuegoComponent implements OnInit,OnDestroy {
+export class JuegoComponent implements OnInit {
   deshabilitado = false;
   puntuacion1 = 0;
   puntuacion2 = 0;
@@ -44,12 +44,5 @@ export class JuegoComponent implements OnInit,OnDestroy {
     this.entra = false;
     }
 
-
-  }
-
-  ngOnDestroy(){
-    this.empezar.unsubscribe();
-    this.jugadores.unsubscribe();
-    this.habilitar.unsubscribe();
   }
 }

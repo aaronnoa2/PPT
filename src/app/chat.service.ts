@@ -9,6 +9,8 @@ export class ChatService {
   private socket;
 
   usuario: string;
+  usuarioGanador: string;
+  suscripciones;
 
   constructor() {
     this.socket = io();
@@ -31,59 +33,69 @@ export class ChatService {
   }
 
   public empezar = () => {
-    return Observable.create((observer) => {
+    let a =  Observable.create((observer) => {
       this.socket.on('empezar', (data) => {
         observer.next(data);
-      })
-    })
+      });
+      this.suscripciones.push(a);
+    });
   };
 
   public jugadores = () => {
-    return Observable.create((observer) => {
+    let b =  Observable.create((observer) => {
       this.socket.on('jugadores', (data) => {
         observer.next(data);
-      })
+      });
+      this.suscripciones.push(b);
     })
   };
 
   public puntos = () => {
-    return Observable.create((observer) => {
+    let c = Observable.create((observer) => {
       this.socket.on('puntos', (data) => {
         observer.next(data);
       });
-    });
+      this.suscripciones.push(c);
+    })
   };
 
   public resultado = () => {
-    return Observable.create((observer) => {
+    let d =  Observable.create((observer) => {
       this.socket.on('resultado', (data) => {
         observer.next(data);
       });
-    });
-  }
+      this.suscripciones.push(d)
+    })
+  };
 
   public acabar = () => {
-    return Observable.create((observer) => {
+    let e =  Observable.create((observer) => {
       this.socket.on('acabar', (data) => {
         observer.next(data);
         setTimeout(() => {this.socket.emit('salir-sala')}, 1000);
+      });
+      this.suscripciones.push(e);
+      this.suscripciones.forEach(function (suscripcion) {
+        suscripcion.unsubscribe();
       })
     })
   };
 
   public habilitar = () => {
-    return Observable.create((observer) => {
+    let f =  Observable.create((observer) => {
       this.socket.on('habilitar', (data) => {
         observer.next(data);
-      })
+      });
+      this.suscripciones.push(f)
     })
   };
 
   public getMessages = () => {
-    return Observable.create((observer) => {
+    let g =  Observable.create((observer) => {
       this.socket.on('chat message', (data) => {
         observer.next(data);
-      })
-    })
+      });
+      this.suscripciones.push(g);
+    });
   }
 }
