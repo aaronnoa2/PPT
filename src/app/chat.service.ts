@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import * as io from 'socket.io-client'
+import * as io from 'socket.io-client';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class ChatService {
-  private url = 'http://localhost:3000';
+  private url = environment.serverSocket;
   private socket;
 
   usuario: string;
