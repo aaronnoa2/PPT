@@ -18,7 +18,7 @@ export class ChatService {
   }
 
   public listo() {
-    this.socket.emit('listo');
+    this.socket.emit('listo', this.usuario);
   }
 
   public sendMessage(data) {
@@ -37,6 +37,22 @@ export class ChatService {
     })
   };
 
+  public jugadores = () => {
+    return Observable.create((observer) => {
+      this.socket.on('jugadores', (data) => {
+        observer.next(data);
+      })
+    })
+  };
+
+  public puntos = () => {
+    return Observable.create((observer) => {
+      this.socket.on('puntos', (data) => {
+        observer.next(data);
+      })
+    })
+  };
+
   public resultado = () => {
     return Observable.create((observer) => {
       this.socket.on('resultado', (data) => {
@@ -49,6 +65,7 @@ export class ChatService {
     return Observable.create((observer) => {
       this.socket.on('acabar', (data) => {
         observer.next(data);
+        setTimeout(() => {this.socket.emit('salir-sala')}, 1000);
       })
     })
   };
