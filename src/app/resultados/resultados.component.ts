@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ChatService} from "../chat.service";
 
 @Component({
@@ -6,15 +6,13 @@ import { ChatService} from "../chat.service";
   templateUrl: './resultados.component.html',
   styleUrls: ['./resultados.component.css']
 })
-export class ResultadosComponent implements OnInit {
+export class ResultadosComponent {
 
-  constructor(private chat: ChatService) { }
-
-  ganador = '';
-
-  ngOnInit() {
+  constructor(private chat: ChatService) {
     this.chat.resultado().subscribe(data => {
       this.ganador = data;
-    })
+    });
   }
+
+  ganador = '';
 }

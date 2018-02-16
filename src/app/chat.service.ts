@@ -50,17 +50,17 @@ export class ChatService {
     return Observable.create((observer) => {
       this.socket.on('puntos', (data) => {
         observer.next(data);
-      })
-    })
+      });
+    });
   };
 
   public resultado = () => {
     return Observable.create((observer) => {
       this.socket.on('resultado', (data) => {
         observer.next(data);
-      })
-    })
-  };
+      });
+    });
+  }
 
   public acabar = () => {
     return Observable.create((observer) => {
