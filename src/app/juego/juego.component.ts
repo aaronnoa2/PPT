@@ -26,7 +26,6 @@ export class JuegoComponent implements OnInit,OnDestroy {
   ngOnInit() {
 
     if(this.entra){
-      console.log(this.entra, 'ha entrado');
       this.empezar =  this.chat.empezar().subscribe(data => {
         this.deshabilitado = data;
       });
@@ -39,7 +38,6 @@ export class JuegoComponent implements OnInit,OnDestroy {
       });
 
       this.chat.puntos().subscribe(data => {
-        console.log(data ,'Estos son los datos que llegan al ts');
         this.puntuacion1 = data.puntuacionPrimero;
         this.puntuacion2 = data.puntuacionSegundo;
       });

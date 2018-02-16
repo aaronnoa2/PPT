@@ -32,7 +32,6 @@ export class InicioComponent implements OnInit {
     else{
       this.valido = false;
     }
-    console.log(this.usuario)
   }
 
   pedirUsuario(){

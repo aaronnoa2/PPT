@@ -29,7 +29,6 @@ io.on('connection', function (socket) {
 
     if (!listo[0] || !listo[1]) {
       socket.join('salaJugadores');
-      console.log('----Ha entrado el jugador:', nombreJugador);
       jugadores.push(nombreJugador);
 
       if (listo[0] === false) {
@@ -40,18 +39,14 @@ io.on('connection', function (socket) {
       }
       if (listo[0] === true && listo[1] === true) {
         io.to('salaJugadores').emit('empezar', true);
-        console.log(jugadores);
         jugadoresjson = {jugadorPrimero:jugadores[0],jugadorSegundo:jugadores[1]};
         io.to('salaJugadores').emit('jugadores',jugadoresjson);
       }
 
       socket.on('elegirCarta', function (data) {
-        console.log('recibe carta '+data.jugador);
         if (listo[0] === true && listo[1] === true) {
           cartas.push(data.carta);
-          console.log('pusheamos cartas:', cartas);
           if (cartas.length >= 2) {
-            console.log('entro en ganador');
             ganador();
             puntosJson = {puntuacionPrimero:puntos[0],puntuacionSegundo:puntos[1]};
             io.to('salaJugadores').emit('puntos',puntosJson);
@@ -60,10 +55,10 @@ io.on('connection', function (socket) {
             if (rondas >= 5) {
 
               if (puntos[0] > puntos[1]) {
-                jugadorGanador = jugadores[0].jugador;
+                jugadorGanador = jugadores[0]
               }
               if (puntos[1] > puntos[0]) {
-                jugadorGanador = jugadores[1].jugador;
+                jugadorGanador = jugadores[1]
               }
               if (puntos[0] === puntos[1]) {
                 jugadorGanador = 'Empate';
@@ -82,7 +77,6 @@ io.on('connection', function (socket) {
       });
 
       socket.on('salir-sala', function(data) {
-        console.log('usuario ha salido de sala');
         socket.leave('salaJugadores');
       })
     }
@@ -104,30 +98,23 @@ server.listen(port, function () {
 
 function ganador() {
   if (cartas[0] === cartas[1]) {
-    console.log('Ronda de Empate')
   }
   if (cartas[0] === 0 && cartas[1] === 1) {
-    console.log("Gana" + jugadores[1].jugador);
     puntos[1] += 1;
   }
   if (cartas[0] === 0 && cartas[1] === 2) {
-    console.log("Gana" + jugadores[0].jugador);
     puntos[0] += 1;
   }
   if (cartas[0] === 1 && cartas[1] === 2) {
-    console.log("Gana" + jugadores[1].jugador);
     puntos[1] += 1;
   }
   if (cartas[0] === 1 && cartas[1] === 0) {
-    console.log("Gana" + jugadores[0].jugador);
     puntos[0] += 1;
   }
   if (cartas[0] === 2 && cartas[1] === 0) {
-    console.log("Gana" + jugadores[1].jugador);
     puntos[1] += 1;
   }
   if (cartas[0] === 2 && cartas[1] === 1) {
-    console.log("Gana" + jugadores[0].jugador);
     puntos[0] += 1;
   }
 
@@ -143,6 +130,4 @@ function reiniciar() {
   puntos = [0, 0];
   rondas = 0;
   cartas = [];
-
-  console.log('-------------------- Datos reiniciados')
 }

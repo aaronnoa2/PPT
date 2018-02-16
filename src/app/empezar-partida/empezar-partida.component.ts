@@ -20,7 +20,6 @@ export class EmpezarPartidaComponent implements OnInit {
 
   deshabilitarBoton(){
     this.habilitado = true;
-    console.log(this.habilitado);
   }
 
   ngOnInit() {

@@ -15,7 +15,6 @@ export class ResultadosComponent implements OnInit {
   ngOnInit() {
     this.chat.resultado().subscribe(data => {
       this.ganador = data;
-      console.log(data + 'Jugador que ha ganado ya asignado');
     })
   }
 }
