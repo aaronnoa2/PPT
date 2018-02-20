@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import * as io from 'socket.io-client';
-import { environment } from '../environments/environment';
+import * as io from 'socket.io-client'
 
 @Injectable()
 export class ChatService {
-  private url = environment.serverSocket;
+  private url = 'http://localhost:3000';
   private socket;
 
   usuario: string;
-  usuarioGanador: string;
-  suscripciones;
+  ganador: string;
 
   constructor() {
-    this.socket = io();
+    this.socket = io(this.url);
   }
 
   public meterUsuario(usuario){
@@ -33,69 +31,61 @@ export class ChatService {
   }
 
   public empezar = () => {
-    let a =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('empezar', (data) => {
         observer.next(data);
       });
-      this.suscripciones.push(a);
-    });
+    })
   };
 
   public jugadores = () => {
-    let b =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('jugadores', (data) => {
         observer.next(data);
       });
-      this.suscripciones.push(b);
     })
   };
 
   public puntos = () => {
-    let c = Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('puntos', (data) => {
         observer.next(data);
       });
-      this.suscripciones.push(c);
     })
   };
 
   public resultado = () => {
-    let d =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('resultado', (data) => {
+        this.ganador = data;
         observer.next(data);
       });
-      this.suscripciones.push(d)
     })
   };
 
   public acabar = () => {
-    let e =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('acabar', (data) => {
         observer.next(data);
         setTimeout(() => {this.socket.emit('salir-sala')}, 1000);
       });
-      this.suscripciones.push(e);
-      this.suscripciones.forEach(function (suscripcion) {
-        suscripcion.unsubscribe();
-      })
-    })
-  };
+      });
+    };
 
   public habilitar = () => {
-    let f =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('habilitar', (data) => {
         observer.next(data);
       });
-      this.suscripciones.push(f)
     })
   };
 
   public getMessages = () => {
-    let g =  Observable.create((observer) => {
+    return Observable.create((observer) => {
       this.socket.on('chat message', (data) => {
         observer.next(data);
       });
-      this.suscripciones.push(g);
-    });
-  }
+    })
+  };
+
 }
