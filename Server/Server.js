@@ -20,6 +20,8 @@ puntos = [0, 0];
 jugadorGanador = '';
 
 
+
+
 io.on('connection', function (socket) {
   socket.broadcast.emit("user connected");
   console.log('User connected');
