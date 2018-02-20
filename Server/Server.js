@@ -1,11 +1,16 @@
-var express = require('express');
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
+
+
+const publicPath = path.join(__dirname, './public');
+const port = process.env.PORT || 3000;
 var app = express();
-
-var http = require('http');
-var server = http.Server(app);
-
-var socketIO = require('socket.io');
+var server = http.createServer(app);
 var io = socketIO(server);
+
+app.use(express.static(publicPath));
 
 cartas = [];
 jugadores = [];
@@ -14,7 +19,6 @@ rondas = 0;
 puntos = [0, 0];
 jugadorGanador = '';
 
-const port = process.env.PORT || 3000;
 
 io.on('connection', function (socket) {
   socket.broadcast.emit("user connected");
